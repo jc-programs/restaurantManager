@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@jakarta.persistence.Table(name = "RestaurantTable" )
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

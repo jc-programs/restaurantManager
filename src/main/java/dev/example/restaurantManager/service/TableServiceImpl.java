@@ -3,9 +3,11 @@ package dev.example.restaurantManager.service;
 import dev.example.restaurantManager.model.Table;
 import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TableServiceImpl implements TableService {
 
     @Autowired
