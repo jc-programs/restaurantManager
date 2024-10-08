@@ -2,7 +2,9 @@ package dev.example.restaurantManager.utilities;
 
 import com.github.javafaker.Faker;
 import dev.example.restaurantManager.model.Customer;
+import dev.example.restaurantManager.model.Table;
 import dev.example.restaurantManager.repository.CustomerRepository;
+import dev.example.restaurantManager.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Locale;
@@ -35,4 +37,9 @@ public class CustomerDataLoader {
             System.out.println(qty + " fake customers have been created and saved to the database.");
         }
     }
+
+
+
+
+
 }
