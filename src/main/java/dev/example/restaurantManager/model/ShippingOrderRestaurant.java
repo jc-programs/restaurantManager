@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class ShippingOrderRestaurant extends OrderRestaurant {
     private String riderName;
 
     public ShippingOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                   double totalPayment, boolean paid, ArrayList<Menu> menus,
+                                   double totalPayment, boolean paid, List<Menu> menus,
                                    String address, String city, String riderName) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.address = address;

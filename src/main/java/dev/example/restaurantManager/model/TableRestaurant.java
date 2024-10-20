@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,10 +25,10 @@ public class TableRestaurant {
     private boolean busy;
 
     @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
-    private ArrayList<Booking> bookings ;
+    private List<Booking> bookings ;
 
-    @OneToMany(mappedBy = "orderTable")
-    private ArrayList<EatInOrderRestaurant> eatInOrders;
+    @OneToMany(mappedBy = "orderTable", cascade = CascadeType.ALL)
+    private List<EatInOrderRestaurant> eatInOrders;
 
     // new constructor with id and initialization of arraylist of relations
     public TableRestaurant(String id, String name, String description , int qty,  boolean busy) {
@@ -49,7 +50,7 @@ public class TableRestaurant {
     }
 
     // to RUN the OLD Booking tests
-    public TableRestaurant(String id, String name, String description , int qty,  boolean busy, ArrayList<Booking> bookings) {
+    public TableRestaurant(String id, String name, String description , int qty,  boolean busy, List<Booking> bookings) {
         // id = name. Only to run some test
         this(id,name,description,qty,busy);
         this.bookings = bookings;
@@ -59,8 +60,8 @@ public class TableRestaurant {
     //method to add
     public void addBooking(Booking booking) {
         this.getBookings().add(booking);
-        if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
-        booking.setTableRestaurantMapped(this);
+        if (booking.getTableBooking() != null) booking.getTableBooking().getBookings().remove(booking);
+        booking.setTableBooking(this);
     }
 
     @Override

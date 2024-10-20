@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,7 +22,7 @@ public class TakeAwayOrder extends OrderRestaurant {
 
     // Constructor for TakeAwayOrder with the WHOLE DATA fields
     public TakeAwayOrder(String id, Date date, String waiter, int peopleQty,
-                         double totalPayment, boolean paid, ArrayList<Menu> menus,
+                         double totalPayment, boolean paid, List<Menu> menus,
                          Customer customerTakeAway) {
 
         // THIS PART is SUPERCLASS

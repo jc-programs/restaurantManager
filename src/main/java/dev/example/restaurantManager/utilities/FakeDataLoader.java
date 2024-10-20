@@ -27,10 +27,10 @@ public class FakeDataLoader {
 
     private Faker faker;
 
-    private ArrayList<Customer> customers;
-    private ArrayList<Menu> menus;
-    private ArrayList<TableRestaurant> tables;
-    private ArrayList<EatInOrderRestaurant> eatInOrders;
+    private List<Customer> customers;
+    private List<Menu> menus;
+    private List<TableRestaurant> tables;
+    private List<EatInOrderRestaurant> eatInOrders;
 
 
     public void createData(){
@@ -66,9 +66,9 @@ public class FakeDataLoader {
         return list.get(faker.number().numberBetween(0,list.size()));
     }
 
-    private ArrayList<Object> getManyRandom(List<Object> list, int elements){
+    private List<Object> getManyRandom(List<Object> list, int elements){
         assert(elements >0 && elements <= list.size());
-        ArrayList<Object> listSelecteds = new ArrayList<>();
+        List<Object> listSelecteds = new ArrayList<>();
         while(elements> 0){
             Object selected = list.get(faker.number().numberBetween(0,list.size()));
             if(listSelecteds.contains(selected)){
@@ -80,8 +80,8 @@ public class FakeDataLoader {
         return listSelecteds;
     }
 
-    private ArrayList<Customer> createCustomers(int number){
-        ArrayList<Customer> list = new ArrayList<>();
+    private List<Customer> createCustomers(int number){
+        List<Customer> list = new ArrayList<>();
         for(int i=0;i<number;i++){
             list.add(new Customer(
                             UUID.randomUUID().toString(),
@@ -97,8 +97,8 @@ public class FakeDataLoader {
         return list;
     }
 
-    private ArrayList<TableRestaurant> createTables(int number){
-        ArrayList<TableRestaurant> list = new ArrayList<>();
+    private List<TableRestaurant> createTables(int number){
+        List<TableRestaurant> list = new ArrayList<>();
         for(int i=0;i<number;i++) {
             String tableName = "Table " + String.format("%02d", i+1);
             list.add(new TableRestaurant(
@@ -112,8 +112,8 @@ public class FakeDataLoader {
         return list;
     }
 
-    private ArrayList<Menu> createMenus(int number){
-        ArrayList<Menu> list = new ArrayList<>();
+    private List<Menu> createMenus(int number){
+        List<Menu> list = new ArrayList<>();
         for(int i=0;i<number;i++) {
             String menuName = faker.food().dish();
             // random price between 7.95 and 30.00
@@ -131,10 +131,10 @@ public class FakeDataLoader {
         return list;
     }
 
-    private ArrayList<EatInOrderRestaurant> createEatInOrders(int number){
-        ArrayList<EatInOrderRestaurant> list = new ArrayList<>();
+    private List<EatInOrderRestaurant> createEatInOrders(int number){
+        List<EatInOrderRestaurant> list = new ArrayList<>();
         for(int i=0;i<number;i++) {
-            ArrayList<Menu> menusSelected = (ArrayList<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
+            List<Menu> menusSelected = (List<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
             list.add(new EatInOrderRestaurant(
                     UUID.randomUUID().toString(),
                     faker.date().between(new Date(2024, 1, 1), new Date(2024, 12, 31)),

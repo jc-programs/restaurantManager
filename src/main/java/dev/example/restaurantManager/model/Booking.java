@@ -24,7 +24,7 @@ public class Booking {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TABLE_RESTAURANT_FK_ID")
-    private TableRestaurant tableRestaurantMapped;
+    private TableRestaurant tableBooking;
 
     // Custom toString method (optional, as @Data provides a default toString)
     @Override
@@ -34,7 +34,7 @@ public class Booking {
                 "phoneNumber: " + phoneNumber + "\n"  +
                 "peopleQty: " + peopleQty +"\n"  +
                 "date: " + date +"\n"  +
-                "table: " + tableRestaurantMapped
+                "table: " + tableBooking
                 ;
     }
 }
