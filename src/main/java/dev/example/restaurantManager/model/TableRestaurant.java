@@ -9,9 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class TableRestaurant {
@@ -23,21 +23,28 @@ public class TableRestaurant {
     private int qty;
     private boolean busy;
 
-    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
-    private ArrayList<Booking> bookings ;
+    @OneToMany(mappedBy = "tableBooking", cascade = CascadeType.ALL)
+    private List<Booking> bookings ;
 
     @OneToMany(mappedBy = "orderTable")
-    private ArrayList<EatInOrderRestaurant> eatInOrders;
+    private List<EatInOrderRestaurant> eatInOrders;
 
-    // new constructor with id and initialization of arraylist of relations
-    public TableRestaurant(String id, String name, String description , int qty,  boolean busy) {
+
+    // new constructor with all parameters
+    public TableRestaurant(String id, String name, String description , int qty,  boolean busy,
+                           List<Booking> bookings, List<EatInOrderRestaurant> eatInOrders) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.qty = qty;
         this.busy = busy;
-        this.bookings = new ArrayList<>();
-        this.eatInOrders = new ArrayList<>();
+        this.bookings = bookings;
+        this.eatInOrders = eatInOrders;
+    }
+
+    // new constructor with id and initialization of empty arraylist of relations
+    public TableRestaurant(String id, String name, String description , int qty,  boolean busy) {
+        this(id, name, description , qty,  busy,new ArrayList<>(),new ArrayList<>());
     }
 
 
@@ -45,22 +52,20 @@ public class TableRestaurant {
     // we must create a VERY CONCRETE constructor to RUN the OLD tests
     public TableRestaurant(String name, String description , int qty,  boolean busy) {
         // id = name. Only to run some test
-        this(name,name,description,qty,busy);
+        this(name,name,description,qty,busy,new ArrayList<>(),new ArrayList<>());
     }
 
     // to RUN the OLD Booking tests
-    public TableRestaurant(String id, String name, String description , int qty,  boolean busy, ArrayList<Booking> bookings) {
-        // id = name. Only to run some test
-        this(id,name,description,qty,busy);
-        this.bookings = bookings;
+    public TableRestaurant(String id, String name, String description , int qty,  boolean busy, List<Booking> bookings) {
+        this(id,name,description,qty,busy,bookings,new ArrayList<>());
     }
 
 
     //method to add
     public void addBooking(Booking booking) {
         this.getBookings().add(booking);
-        if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
-        booking.setTableRestaurantMapped(this);
+        if (booking.getTableBooking() != null) booking.getTableBooking().getBookings().add(booking);
+        booking.setTableBooking(this);
     }
 
     @Override

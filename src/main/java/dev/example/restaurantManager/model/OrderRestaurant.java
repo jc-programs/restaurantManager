@@ -1,6 +1,7 @@
 package dev.example.restaurantManager.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -24,11 +25,12 @@ public class OrderRestaurant {
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Menu> menus = new ArrayList<>();
+    private List<Menu> menus = new ArrayList<>();
 
     @Override
     public String toString() {
         return
+                "id: " + id + "\n"  +
                 "date: " + date + "\n"  +
                 "waiter: " + waiter  + "\n"  +
                 "peopleQty: " + peopleQty +"\n"  +

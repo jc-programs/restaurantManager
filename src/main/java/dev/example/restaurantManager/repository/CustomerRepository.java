@@ -11,7 +11,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
     // 0. Count customers by name
     int countByName(String name);
     // 1. Find customers by name
-    ArrayList<Customer> findByName(String name);
+    List<Customer> findByName(String name);
     // 3. Find customers by name
     long count();
 

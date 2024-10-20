@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.FetchType;
@@ -29,8 +30,8 @@ public class EatInOrderRestaurant extends OrderRestaurant {
 
     // constructor with all attributes
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, ArrayList<Menu> menus,
-                                ArrayList<TableRestaurant> occupiedTables,
+                                double totalPayment, boolean paid, List<Menu> menus,
+                                List<TableRestaurant> occupiedTables,
                                 TableRestaurant orderTable) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
         this.orderTable = orderTable;
@@ -39,15 +40,15 @@ public class EatInOrderRestaurant extends OrderRestaurant {
 
     // constructor without orderTable and occupiedTables
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, ArrayList<Menu> menus) {
+                                double totalPayment, boolean paid, List<Menu> menus) {
         this(id, date, waiter, peopleQty, totalPayment, paid, menus, null, null);
     }
 
     // constructor without orderTable
     // to keep compatibility with older test
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, ArrayList<Menu> menus,
-                                ArrayList<TableRestaurant> occupiedTables) {
+                                double totalPayment, boolean paid, List<Menu> menus,
+                                List<TableRestaurant> occupiedTables) {
         this(id, date, waiter, peopleQty, totalPayment, paid, menus, occupiedTables, null);
     }
 

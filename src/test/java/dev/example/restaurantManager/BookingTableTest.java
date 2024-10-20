@@ -43,7 +43,7 @@ public class BookingTableTest {
         tableRestaurant1.getBookings().add(booking1);
 
         // assign tableRestaurant to booking
-        booking1.setTableRestaurantMapped(tableRestaurant1);
+        booking1.setTableBooking(tableRestaurant1);
         tableRestaurant1.setBusy(true);
 
         // save booking and table
