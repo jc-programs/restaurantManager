@@ -23,7 +23,7 @@ public class TableRestaurant {
     private int qty;
     private boolean busy;
 
-    @OneToMany(mappedBy = "tableRestaurantMapped", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookingTable", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings ;
 
     @OneToMany(mappedBy = "orderTable")
@@ -36,8 +36,10 @@ public class TableRestaurant {
         this.description = description;
         this.qty = qty;
         this.busy = busy;
-        this.bookings = new ArrayList<>();
-        this.eatInOrders = new ArrayList<>();
+//        this.bookings = new ArrayList<>();
+//        this.eatInOrders = new ArrayList<>();
+        this.bookings = null;
+        this.eatInOrders = null;
     }
 
 
@@ -59,8 +61,8 @@ public class TableRestaurant {
     //method to add
     public void addBooking(Booking booking) {
         this.getBookings().add(booking);
-        if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
-        booking.setTableRestaurantMapped(this);
+        if (booking.getBookingTable() != null) booking.getBookingTable().getBookings().add(booking);
+        booking.setBookingTable(this);
     }
 
     @Override

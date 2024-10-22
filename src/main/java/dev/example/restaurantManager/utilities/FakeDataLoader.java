@@ -1,13 +1,12 @@
 package dev.example.restaurantManager.utilities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.javafaker.Faker;
-import dev.example.restaurantManager.model.Customer;
-import dev.example.restaurantManager.model.EatInOrderRestaurant;
-import dev.example.restaurantManager.model.Menu;
-import dev.example.restaurantManager.model.TableRestaurant;
-import dev.example.restaurantManager.repository.CustomerRepository;
-import dev.example.restaurantManager.repository.EatInOrderRestaurantRepository;
-import dev.example.restaurantManager.repository.TableRestaurantRepository;
+import dev.example.restaurantManager.model.*;
+import dev.example.restaurantManager.repository.*;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,15 +18,24 @@ public class FakeDataLoader {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
+    private BookingRepository bookingRepository;
+    @Autowired
     private TableRestaurantRepository tableRepository;
     @Autowired
+    private MenuRepository menuRepository;
+    @Autowired
     private EatInOrderRestaurantRepository eatInOrderRepository;
+    @Autowired
+    private ShippingOrderRestaurantRepository shippingOrderRestaurantRepository;
+    @Autowired
+    private TakeAwayOrderRepository takeAwayOrderRepository;
 
 
 
     private Faker faker;
 
     private ArrayList<Customer> customers;
+    private ArrayList<Booking> bookings;
     private ArrayList<Menu> menus;
     private ArrayList<TableRestaurant> tables;
     private ArrayList<EatInOrderRestaurant> eatInOrders;
@@ -35,7 +43,7 @@ public class FakeDataLoader {
 
     public void createData(){
         createFakeData();
-        saveDataWithoutRelations();
+         saveDataWithoutRelations();
     }
 
     private void createFakeData(){
@@ -45,6 +53,8 @@ public class FakeDataLoader {
         customers = createCustomers(50);
         menus = createMenus(20);
         tables = createTables(10);
+
+        bookings = createBookings(100);
         eatInOrders = createEatInOrders(100);
     }
 
@@ -52,8 +62,14 @@ public class FakeDataLoader {
         for(Customer element:customers){
             customerRepository.save(element);
         }
+        for(Menu element:menus){
+            menuRepository.save(element);
+        }
         for(TableRestaurant element:tables){
             tableRepository.save(element);
+        }
+        for(Booking element:bookings){
+            bookingRepository.save(element);
         }
         for(EatInOrderRestaurant element:eatInOrders){
             eatInOrderRepository.save(element);
@@ -62,12 +78,12 @@ public class FakeDataLoader {
 
 
     private Object getOneRandom(List<Object> list){
-        assert(list.size() > 0);
+        assert(list != null && list.size() > 0);
         return list.get(faker.number().numberBetween(0,list.size()));
     }
 
     private ArrayList<Object> getManyRandom(List<Object> list, int elements){
-        assert(elements >0 && elements <= list.size());
+        assert(list != null && elements >0 && elements <= list.size());
         ArrayList<Object> listSelecteds = new ArrayList<>();
         while(elements> 0){
             Object selected = list.get(faker.number().numberBetween(0,list.size()));
@@ -97,6 +113,24 @@ public class FakeDataLoader {
         return list;
     }
 
+    private ArrayList<Booking> createBookings(int number){
+        ArrayList<Booking> list = new ArrayList<>();
+        for(int i=0;i<number;i++){
+            TableRestaurant tableSelected = (TableRestaurant)getOneRandom((List<Object>) (Object)tables);
+            list.add(new Booking(
+                            UUID.randomUUID().toString(),
+                            faker.name().fullName(),
+                            faker.phoneNumber().cellPhone(),
+                            faker.random().nextInt(2, 6),
+                            faker.date().between(new Date(2024, 1, 1), new Date(2024, 12, 31)),
+                            faker.random().nextBoolean(),
+                            tableSelected
+                    )
+            );
+        }
+        return list;
+    }
+
     private ArrayList<TableRestaurant> createTables(int number){
         ArrayList<TableRestaurant> list = new ArrayList<>();
         for(int i=0;i<number;i++) {
@@ -120,7 +154,7 @@ public class FakeDataLoader {
             double menuPrice = faker.number().randomDouble(1, 8, 30)
                     - (faker.random().nextInt(6) < 4 ? 0 : 0.05);
             list.add(new Menu(
-                    // UUID.randomUUID().toString(),
+                    UUID.randomUUID().toString(),
                     menuName,
                     menuPrice,
                     menuName + " content",
