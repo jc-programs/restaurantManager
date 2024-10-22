@@ -33,8 +33,8 @@ public class FakeDataLoader {
     private List<Booking> bookings;
 
     public void createData(){
-//        createFakeData();
-//        saveDataWithoutRelations();
+        createFakeData();
+        saveDataWithoutRelations();
     }
 
     private void createFakeData(){
@@ -158,7 +158,7 @@ public class FakeDataLoader {
     private List<EatInOrderRestaurant> createEatInOrders(int number){
         List<EatInOrderRestaurant> list = new ArrayList<>();
         for(int i=0;i<number;i++) {
-            List<Menu> menusSelected = (List<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
+            ArrayList<Menu> menusSelected = (ArrayList<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
             list.add(new EatInOrderRestaurant(
                     UUID.randomUUID().toString(),
                     faker.date().between(new Date(2024, 1, 1), new Date(2024, 12, 31)),

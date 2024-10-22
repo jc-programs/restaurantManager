@@ -30,7 +30,7 @@ public class EatInOrderRestaurant extends OrderRestaurant {
 
     // constructor with all attributes
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, List<Menu> menus,
+                                double totalPayment, boolean paid, ArrayList<Menu> menus,
                                 List<TableRestaurant> occupiedTables,
                                 TableRestaurant orderTable) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
@@ -40,14 +40,14 @@ public class EatInOrderRestaurant extends OrderRestaurant {
 
     // constructor without orderTable and occupiedTables
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, List<Menu> menus) {
+                                double totalPayment, boolean paid, ArrayList<Menu> menus) {
         this(id, date, waiter, peopleQty, totalPayment, paid, menus, null, null);
     }
 
     // constructor without orderTable
     // to keep compatibility with older test
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
-                                double totalPayment, boolean paid, List<Menu> menus,
+                                double totalPayment, boolean paid, ArrayList<Menu> menus,
                                 List<TableRestaurant> occupiedTables) {
         this(id, date, waiter, peopleQty, totalPayment, paid, menus, occupiedTables, null);
     }
