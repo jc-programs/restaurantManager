@@ -25,7 +25,7 @@ public class OrderRestaurant {
     private double totalPayment;
     private boolean paid;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order")
     private ArrayList<Menu> menus;
 
     public OrderRestaurant(String id,Date date,String waiter,int peopleQty,double totalPayment,boolean paid, ArrayList<Menu> menus){

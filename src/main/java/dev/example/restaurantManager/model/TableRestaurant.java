@@ -23,7 +23,7 @@ public class TableRestaurant {
     private int qty;
     private boolean busy;
 
-    @OneToMany(mappedBy = "bookingTable", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookingTable")
     private ArrayList<Booking> bookings ;
 
     @OneToMany(mappedBy = "tableEatInOrder")
