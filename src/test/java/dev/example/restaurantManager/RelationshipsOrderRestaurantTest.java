@@ -95,7 +95,7 @@ public class RelationshipsOrderRestaurantTest {
 
         EatInOrderRestaurant eatInOrder1 = eatInOrders.get(0);
         TableRestaurant table = tables.get(0);
-        eatInOrder1.setOrderTable(table);
+        eatInOrder1.setTableEatInOrder(table);
         tableRestaurantRepository.save(table);
         System.out.println(eatInOrder1);
         eatInOrderRepository.save(eatInOrder1);
@@ -107,7 +107,7 @@ public class RelationshipsOrderRestaurantTest {
         assertThat(found).isPresent();
         EatInOrderRestaurant orderDB = found.get();
         // orderTable must be the same we set
-        TableRestaurant tableDB = orderDB.getOrderTable();
+        TableRestaurant tableDB = orderDB.getTableEatInOrder();
         assertThat(tableDB.equals(table));
         // order must be the same we selected
         assertThat(orderDB.equals(eatInOrder1));

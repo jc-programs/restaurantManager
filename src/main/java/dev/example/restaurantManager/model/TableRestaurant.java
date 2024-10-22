@@ -26,7 +26,7 @@ public class TableRestaurant {
     @OneToMany(mappedBy = "bookingTable", cascade = CascadeType.ALL)
     private ArrayList<Booking> bookings ;
 
-    @OneToMany(mappedBy = "orderTable")
+    @OneToMany(mappedBy = "tableEatInOrder")
     private ArrayList<EatInOrderRestaurant> eatInOrders;
 
     // new constructor with id and initialization of arraylist of relations
@@ -36,8 +36,6 @@ public class TableRestaurant {
         this.description = description;
         this.qty = qty;
         this.busy = busy;
-//        this.bookings = new ArrayList<>();
-//        this.eatInOrders = new ArrayList<>();
         this.bookings = null;
         this.eatInOrders = null;
     }

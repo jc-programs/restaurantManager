@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@AllArgsConstructor
+// @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "ORDER_RESTAURANT")
@@ -24,7 +24,27 @@ public class OrderRestaurant {
     private int peopleQty;
     private double totalPayment;
     private boolean paid;
-    private ArrayList<Menu> menus = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private ArrayList<Menu> menus;
+
+    public OrderRestaurant(String id,Date date,String waiter,int peopleQty,double totalPayment,boolean paid, ArrayList<Menu> menus){
+        this.id=id;
+        this.date=date;
+        this.waiter=waiter;
+        this.peopleQty=peopleQty;
+        this.totalPayment=totalPayment;
+        this.paid=paid;
+        this.setMenus(menus);
+    }
+
+    public void setMenus(ArrayList<Menu> menus) {
+        this.menus = menus;
+        for (Menu menu : menus) {
+            menu.setOrder(this);
+        }
+    }
+
 
     @Override
     public String toString() {

@@ -39,6 +39,8 @@ public class FakeDataLoader {
     private ArrayList<Menu> menus;
     private ArrayList<TableRestaurant> tables;
     private ArrayList<EatInOrderRestaurant> eatInOrders;
+    private ArrayList<ShippingOrderRestaurant> shippingOrders;
+    private ArrayList<TakeAwayOrder> takeAwayOrders;
 
 
     public void createData(){
@@ -56,6 +58,8 @@ public class FakeDataLoader {
 
         bookings = createBookings(100);
         eatInOrders = createEatInOrders(100);
+        takeAwayOrders = createTakeAwayOrders(100);
+        shippingOrders = createShippingOrders(100);
     }
 
     private void saveDataWithoutRelations(){
@@ -73,6 +77,12 @@ public class FakeDataLoader {
         }
         for(EatInOrderRestaurant element:eatInOrders){
             eatInOrderRepository.save(element);
+        }
+        for(ShippingOrderRestaurant element:shippingOrders){
+            shippingOrderRestaurantRepository.save(element);
+        }
+        for(TakeAwayOrder element:takeAwayOrders){
+            takeAwayOrderRepository.save(element);
         }
     }
 
@@ -122,7 +132,7 @@ public class FakeDataLoader {
                             faker.name().fullName(),
                             faker.phoneNumber().cellPhone(),
                             faker.random().nextInt(2, 6),
-                            faker.date().between(new Date(2024, 1, 1), new Date(2024, 12, 31)),
+                            faker.date().between(new Date(2024, Calendar.JANUARY, 1), new Date(2024, Calendar.DECEMBER, 31)),
                             faker.random().nextBoolean(),
                             tableSelected
                     )
@@ -171,7 +181,7 @@ public class FakeDataLoader {
             ArrayList<Menu> menusSelected = (ArrayList<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
             list.add(new EatInOrderRestaurant(
                     UUID.randomUUID().toString(),
-                    faker.date().between(new Date(2024, 1, 1), new Date(2024, 12, 31)),
+                    faker.date().between(new Date(2024, Calendar.JANUARY, 1), new Date(2024, Calendar.DECEMBER, 31)),
                     faker.name().firstName(),
                     faker.number().numberBetween(1, 6),
                     0.0,
@@ -181,4 +191,45 @@ public class FakeDataLoader {
         }
         return list;
     }
+
+    private ArrayList<ShippingOrderRestaurant> createShippingOrders(int number){
+        ArrayList<ShippingOrderRestaurant> list = new ArrayList<>();
+        for(int i=0;i<number;i++) {
+            ArrayList<Menu> menusSelected = (ArrayList<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
+            list.add(new ShippingOrderRestaurant(
+                    UUID.randomUUID().toString(),
+                    faker.date().between(new Date(2024, Calendar.JANUARY, 1), new Date(2024, Calendar.DECEMBER, 31)),
+                    faker.name().firstName(),
+                    faker.number().numberBetween(1, 6),
+                    0.0,
+                    false,
+                    menusSelected,
+                    faker.address().fullAddress(),
+                    faker.address().city(),
+                    faker.name().firstName()
+            ));
+        }
+        return list;
+    }
+
+
+    private ArrayList<TakeAwayOrder> createTakeAwayOrders(int number){
+        ArrayList<TakeAwayOrder> list = new ArrayList<>();
+        for(int i=0;i<number;i++) {
+            ArrayList<Menu> menusSelected = (ArrayList<Menu>)(Object) getManyRandom((List<Object>)(Object) menus,faker.number().numberBetween(1,4));
+            Customer customerSelected = (Customer)getOneRandom((List<Object>)(Object) customers);
+            list.add(new TakeAwayOrder(
+                    UUID.randomUUID().toString(),
+                    faker.date().between(new Date(2024, Calendar.JANUARY, 1), new Date(2024, Calendar.DECEMBER, 31)),
+                    faker.name().firstName(),
+                    faker.number().numberBetween(1, 6),
+                    0.0,
+                    false,
+                    menusSelected,
+                    customerSelected
+            ));
+        }
+        return list;
+    }
+
 }

@@ -24,16 +24,16 @@ public class EatInOrderRestaurant extends OrderRestaurant {
     // table that will pay in EatInOrder
     @JoinColumn(name="Table_Order_Id_FK")
     @ManyToOne(fetch = FetchType.LAZY)
-    private TableRestaurant orderTable;
+    private TableRestaurant tableEatInOrder;
 
 
     // constructor with all attributes
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
                                 double totalPayment, boolean paid, ArrayList<Menu> menus,
                                 ArrayList<TableRestaurant> occupiedTables,
-                                TableRestaurant orderTable) {
+                                TableRestaurant tableEatInOrder) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
-        this.orderTable = orderTable;
+        this.tableEatInOrder = tableEatInOrder;
         // this.occupiedTables = occupiedTables;
     }
 
@@ -56,7 +56,7 @@ public class EatInOrderRestaurant extends OrderRestaurant {
     public String toString() {
         String output = super.toString() + "\n" +
                   "Type: Eat In\n" +
-                  "OrderTable: " + (orderTable == null ? "null" : orderTable.getName()) + "\n";
+                  "OrderTable: " + (tableEatInOrder == null ? "null" : tableEatInOrder.getName()) + "\n";
 //        output += "OccupiedTables: " + (occupiedTables == null ?
 //                    "null" :
 //                occupiedTables.stream().map(TableRestaurant::getName).collect(Collectors.joining(", "))

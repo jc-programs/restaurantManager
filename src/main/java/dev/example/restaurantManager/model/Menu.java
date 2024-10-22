@@ -1,16 +1,15 @@
 package dev.example.restaurantManager.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="menu_restaurant")
 public class Menu implements Serializable {
@@ -25,20 +24,21 @@ public class Menu implements Serializable {
     private boolean active;
     private boolean water;
 
-    // constructor with all attributes
+    // table that will pay in EatInOrder
+    @JoinColumn(name="ORDER_FK")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private OrderRestaurant order;
+
+
+    // constructor with all attributes but order
     public Menu(String id,String name,Double price,String content,boolean active,boolean water){
-        this.id=id;
-        this.name=name;
-        this.price = price;
-        this.content=content;
-        this.active=active;
-        this.water=water;
+        this(id,name,price,content,active,water,null);
     }
 
     // to cover old tests
     public Menu(String name,Double price,String content,boolean active,boolean water){
         // id = name
-        this(name,name,price,content,active,water);
+        this(name,name,price,content,active,water,null);
     }
 
 
