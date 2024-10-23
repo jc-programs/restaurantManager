@@ -22,10 +22,24 @@ public class EatInOrderRestaurant extends OrderRestaurant {
     // private ArrayList<TableRestaurant> occupiedTables = new ArrayList<>();
 
     // table that will pay in EatInOrder
-    @JoinColumn(name="Table_Order_Id_FK")
+    @JoinColumn(name="TABLE_EAT_IN_ORDER_FK")
     @ManyToOne(fetch = FetchType.LAZY)
     private TableRestaurant tableEatInOrder;
 
+    public void setTableEatInOrder(TableRestaurant tableEatInOrder) {
+        this.tableEatInOrder = tableEatInOrder;
+        if( this.tableEatInOrder != null){
+            this.tableEatInOrder.addEatInOrder(this);
+        }
+    }
+
+//    public void setMenus(ArrayList<Menu> menus) {
+//        this.setMenus();
+//        this.tableEatInOrder = tableEatInOrder;
+//        if( this.tableEatInOrder != null){
+//            this.tableEatInOrder.addEatInOrder(this);
+//        }
+//    }
 
     // constructor with all attributes
     public EatInOrderRestaurant(String id, Date date, String waiter, int peopleQty,
@@ -33,7 +47,7 @@ public class EatInOrderRestaurant extends OrderRestaurant {
                                 ArrayList<TableRestaurant> occupiedTables,
                                 TableRestaurant tableEatInOrder) {
         super(id, date, waiter, peopleQty, totalPayment, paid, menus);
-        this.tableEatInOrder = tableEatInOrder;
+        this.setTableEatInOrder( tableEatInOrder);
         // this.occupiedTables = occupiedTables;
     }
 

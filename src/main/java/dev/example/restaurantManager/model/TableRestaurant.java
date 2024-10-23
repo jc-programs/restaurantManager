@@ -1,5 +1,6 @@
 package dev.example.restaurantManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,9 +24,11 @@ public class TableRestaurant {
     private int qty;
     private boolean busy;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bookingTable")
     private ArrayList<Booking> bookings ;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tableEatInOrder")
     private ArrayList<EatInOrderRestaurant> eatInOrders;
 
@@ -58,9 +61,34 @@ public class TableRestaurant {
 
     //method to add
     public void addBooking(Booking booking) {
-        this.getBookings().add(booking);
-        if (booking.getBookingTable() != null) booking.getBookingTable().getBookings().add(booking);
+        if(booking== null){
+            return;
+        }
+        if(bookings == null){
+            bookings = new ArrayList<>();
+        }
+        bookings.add(booking);
+        if (booking.getBookingTable() != null) booking.getBookingTable().getBookings().remove(booking);
         booking.setBookingTable(this);
+
+
+//        public void addBooking(Booking booking) {
+//            this.getBookings().add(booking);
+//            if (booking.getTableRestaurantMapped() != null) booking.getTableRestaurantMapped().getBookings().remove(booking);
+//            booking.setTableRestaurantMapped(this);
+//        }
+    }
+
+    //method to add
+    public void addEatInOrder(EatInOrderRestaurant eatInOrder) {
+        if(eatInOrders == null){
+            eatInOrders = new ArrayList<>();
+        }
+        if(!eatInOrders.contains(eatInOrder)){
+            eatInOrders.add(eatInOrder);
+            // eatInOrder.setTableEatInOrder(this);
+        }
+        // if (eatInOrder.getTableEatInOrder() != null) eatInOrder.getTableEatInOrder().getEatInOrders().remove(eatInOrder);
     }
 
     @Override

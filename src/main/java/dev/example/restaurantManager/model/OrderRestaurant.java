@@ -40,8 +40,10 @@ public class OrderRestaurant {
 
     public void setMenus(ArrayList<Menu> menus) {
         this.menus = menus;
-        for (Menu menu : menus) {
-            menu.setOrder(this);
+        if( menus != null){
+            for (Menu menu : menus) {
+                menu.setOrder(this);
+            }
         }
     }
 

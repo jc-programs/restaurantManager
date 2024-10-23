@@ -20,12 +20,5 @@ public class RestaurantManagerApplication {
 		return args -> fakeDataLoader.createData();
 	}
 
-/*
-
-	@Bean
-	public ApplicationRunner dataLoader(CustomerDataLoader customerDataLoader) {
-		return args -> customerDataLoader.createFakeCustomers();
-	}
-*/
 
 }
